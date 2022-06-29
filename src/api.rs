@@ -6,21 +6,16 @@ use axum_auth::AuthBearer;
 use serde_json::json;
 
 use crate::{
-    article::Article,
+    article::fetch_article,
     auth::is_auth_valid,
     prelude::*,
     response::{internal_error_json, not_found_json, unauthorized_json},
 };
 
 pub async fn get_article(Ext(db): Ext<SqlitePool>, P(article_path): P<String>) -> Response {
-    let query = sqlx::query_as!(
-        Article,
-        "SELECT path, title, source FROM articles WHERE path = ?",
-        article_path
-    );
+    let article_path = article_path.trim_start_matches('/');
 
-    let article = match query
-        .fetch_optional(&db)
+    let article = match fetch_article(&db, article_path)
         .await
         .wrap_err("Failed to query database for article")
     {

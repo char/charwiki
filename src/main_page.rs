@@ -2,24 +2,16 @@ use axum::response::Html;
 use num_format::{Locale, ToFormattedString};
 
 use crate::{
-    article::{render_article_content, Article},
+    article::{fetch_article, render_article_content, Article},
     prelude::*,
     response::internal_error_page,
 };
-
-const MAIN_PAGE: &str = include_str!("frontend/main_page.html");
 
 async fn get_main_article(db: &SqlitePool) -> Result<(i32, Option<Article>)> {
     let num_articles = sqlx::query_scalar!("SELECT count(*) FROM articles")
         .fetch_one(db)
         .await?;
-
-    let main_article = sqlx::query_as!(
-        Article,
-        "SELECT path, title, source FROM articles WHERE path = 'special/main-page'",
-    )
-    .fetch_optional(db)
-    .await?;
+    let main_article = fetch_article(db, "special/main-page").await?;
 
     Ok((num_articles, main_article))
 }
@@ -41,7 +33,7 @@ pub async fn main_page(Ext(db): Ext<SqlitePool>) -> Response {
         .unwrap_or_else(|| "The <code>special/main-page</code> article was not found.".into());
 
     Html(
-        MAIN_PAGE
+        include_str!("frontend/main_page.html")
             .replace("[[WIKI:NUM_ARTICLES_RAW]]", &num_articles.to_string())
             .replace(
                 "[[WIKI:NUM_ARTICLES_COMMASEP]]",

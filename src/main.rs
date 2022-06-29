@@ -8,7 +8,6 @@ mod response;
 mod sanitization;
 mod syntax_highlighting;
 
-
 use crate::prelude::*;
 
 use std::net::SocketAddr;
@@ -74,6 +73,7 @@ async fn main() -> Result<()> {
                 .put(api::create_article),
         )
         .route("/", get(main_page::main_page))
+        .route("/-/*article_path", get(article::article_page))
         .nest("/static", get(static_handler))
         .layer(Ext(db));
 
