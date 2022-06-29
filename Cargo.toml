@@ -1,0 +1,26 @@
+[package]
+name = "charwiki"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+axum = "0.5.7"
+axum-auth = "0.2.0"
+color-eyre = "0.6.1"
+comrak = "0.12"
+dotenv = "0.15.0"
+hyper = { version = "0.14.19", features = ["full"] }
+num-format = "0.4.0"
+sanitize_html = "0.7.0"
+serde = { version = "1.0.137", features = ["derive"] }
+serde_json = "1.0.81"
+sqlx = { version = "0.5.13", features = ["runtime-tokio-rustls", "sqlite"] }
+tokio = { version = "1.19.2", features = ["full"] }
+tower = { version = "0.4.13", features = ["full"] }
+tower-http = { version = "0.3.4", features = ["full"] }
+chroma-syntaxis = { git = "https://git.lavender.software/charlotte/chroma-syntaxis.git", rev = "2b62e2" }
+once_cell = "1.12.0"
+regex = "1.5.6"
+
+[patch.crates-io]
+libsqlite3-sys = { git = "https://github.com/videogame-hacker/alt-libsqlite3-sys-rs.git", tag = "3.39.0-1" }

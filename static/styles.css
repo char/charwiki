@@ -1,0 +1,141 @@
+:root {
+  --bg: #121212;
+  --bg-off-1: #1c151c;
+  --bg-off-2: hsl(318, 61%, 35%);
+  --fg: #ffffff;
+  --fg-off-1: #f1f1f1;
+  --accent: hsl(318, 89%, 74%);
+}
+
+::selection {
+  background-color: hsla(318, 89%, 74%, 0.4);
+}
+
+html {
+  background-color: var(--bg);
+  color: var(--fg);
+  font-size: 1.125rem;
+  font-family: 'Inter', sans-serif;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid var(--accent);
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+header,
+main,
+footer {
+  width: calc(100% - 2em);
+  max-width: 90ch;
+  margin: 0 auto;
+  padding: 1em;
+}
+
+header {
+  padding-bottom: 0;
+  margin-bottom: 0.5em;
+  border-bottom: 1px solid var(--fg);
+}
+
+main {
+  flex: 1;
+  margin-bottom: 2em;
+}
+
+li {
+  line-height: 1.6em;
+}
+
+footer nav ul {
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  margin: 0;
+  padding: 0;
+}
+
+footer nav ul > li {
+  display: inline;
+  line-height: 1rem;
+  padding-bottom: 0.15em;
+}
+
+footer nav ul > li + li {
+  border-inline-start: 1px solid var(--fg);
+
+  padding-inline-start: 1ch;
+  margin-inline-start: 1ch;
+}
+
+h1, h2, h3 {
+  margin-top: 0;
+  margin-bottom: 0.5em;
+}
+
+h1 {font-size: 1.66em;}
+h2 {font-size: 1.33em;}
+h3 {font-size: 1.25em;}
+
+code, kbd {
+  font-family: ui-monospace, 'SFMono-Regular', 'SF Mono', 'Menlo', 'Consolas', 'Liberation Mono', monospace;
+  font-size: 0.8em;
+
+  background-color: var(--bg-off-2);
+  padding: 0.1em 0.2em;
+  border-radius: 4px;
+}
+
+pre {
+  background: var(--bg-off-1);
+  padding: 1em;
+  border-radius: 8px;
+  white-space: pre-wrap;
+}
+
+pre code {
+  color: var(--fg-off-1);
+  background: none;
+  font-size: 1rem;
+  padding: 0;
+}
+
+code .parameter {
+  font-weight: 700;
+}
+code .constant, code .string {
+  color: #44c1f7;
+}
+code .comment {
+  color: #a1a1a1;
+}
+code .punctuation {
+  color: #d3d3d3;
+}
+code .type, code .constructor {
+  color: #46ffae;
+}
+code .function {
+  color: #e8a4ff;
+}
+code .function.macro {
+  color: #9a78f7;
+}
+code .keyword,
+code .builtin,
+code .number {
+  color: #ff6ea3;
+}
