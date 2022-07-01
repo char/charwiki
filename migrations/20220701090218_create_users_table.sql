@@ -1,0 +1,5 @@
+CREATE TABLE users (
+  uuid TEXT PRIMARY KEY NOT NULL,
+  username TEXT NOT NULL UNIQUE,
+  password_hash TEXT NOT NULL
+) STRICT;

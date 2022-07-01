@@ -7,7 +7,7 @@ use serde_json::json;
 
 use crate::{
     article::fetch_article,
-    auth::is_auth_valid,
+    auth::get_user,
     prelude::*,
     response::{internal_error_json, not_found_json, unauthorized_json},
 };
@@ -39,9 +39,10 @@ pub async fn rewrite_article(
     Json(body): Json<ArticleRequestBody>,
     auth: Option<AuthBearer>,
 ) -> Response {
-    if !is_auth_valid(auth).await {
-        return unauthorized_json();
-    }
+    let user = match get_user(&db, auth).await {
+        Some(u) => u,
+        None => return unauthorized_json(),
+    };
 
     let query = sqlx::query!(
         "UPDATE articles SET title = ?, source = ? WHERE path = ?",
@@ -72,9 +73,10 @@ pub async fn create_article(
     Json(body): Json<ArticleRequestBody>,
     auth: Option<AuthBearer>,
 ) -> Response {
-    if !is_auth_valid(auth).await {
-        return unauthorized_json();
-    }
+    let user = match get_user(&db, auth).await {
+        Some(u) => u,
+        None => return unauthorized_json(),
+    };
 
     let query = sqlx::query!(
         "INSERT OR IGNORE INTO articles (path, title, source) VALUES (?, ?, ?)",
