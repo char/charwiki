@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="/static/styles.css" />
   </head>
 
-  <body>
+  <body data-article-slug="special/main-page">
     <header>
       <h1>Welcome!</h1>
       <h2>
@@ -25,7 +25,7 @@
       </p>
     </header>
 
-    <main>[[WIKI:ARTICLE_CONTENT]]</main>
+    <main id="article-content">[[WIKI:ARTICLE_CONTENT]]</main>
 
     <footer>
       <nav>
@@ -36,5 +36,7 @@
         </ul>
       </nav>
     </footer>
+
+    <script type="module" src="/static/js/main.js"></script>
   </body>
 </html>

@@ -139,3 +139,36 @@ code .builtin,
 code .number {
   color: #ff6ea3;
 }
+
+#article-editor {
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+  min-height: 100%;
+}
+
+#article-editor textarea, #article-editor input {
+  background-color: var(--bg-off-1);
+  color: var(--fg);
+
+  padding: 0.5em;
+  border: 1px solid var(--bg-off-2);
+}
+
+#article-editor textarea {
+  font-family: monospace;
+  font-size: 16px;
+
+  resize: none;
+  flex: 1;
+  overflow-y: scroll;
+
+  margin-bottom: 1em;
+}
+
+#article-editor input {
+  font-family: 'Inter', sans-serif;
+  font-size: 20px;
+  margin-bottom: 0.5em;
+}
