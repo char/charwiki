@@ -6,21 +6,12 @@ r(() => {
   const main = q("#article-content");
 
   const edit = async () => {
-    if (q("#article-editor") != null) {
-      q("#article-editor").remove();
-      main.style.display = null;
-      return;
-    }
-
     const url = "/api/article/" + ctx.articleSlug;
     const article = await fetch(url).then((r) => r.json());
     if (article.error != null) {
       alert(article.error);
       return;
     }
-
-    const saveButton = h("button", { id: "save-button" }, "Save");
-    const cancelButton = h("button", { id: "save-button" }, "Cancel");
 
     // TODO: Actions for save & cancel
 
@@ -36,8 +27,39 @@ r(() => {
         []
       ),
       h("textarea", { id: "article-content-field", value: article.source }, []),
-      h("section", {}, [saveButton, cancelButton]),
+      h("section", {}, [
+        h("button", { id: "save-button" }, "Save"),
+        h("button", { id: "cancel-button" }, "Cancel"),
+      ]),
     ]);
+
+    editor.querySelector("#save-button").addEventListener("click", async () => {
+      const titleInput = editor.querySelector("#article-title-field");
+      const contentInput = editor.querySelector("#article-content-field");
+
+      const response = await fetch(url, {
+        method: "PATCH",
+        body: JSON.stringify({
+          title: titleInput.value,
+          source: contentInput.value,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+          authorization: "Bearer a", // TODO: Sort out authentication
+        },
+      }).then((r) => r.json());
+
+      if (response.success) {
+        window.location.reload();
+      } else {
+        alert(response.error);
+      }
+    });
+
+    editor.querySelector("#cancel-button").addEventListener("click", () => {
+      editor.remove();
+      main.style.display = null;
+    });
 
     main.parentNode.insertBefore(editor, main);
     main.style.display = "none";
